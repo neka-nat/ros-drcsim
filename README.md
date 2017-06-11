@@ -2,6 +2,7 @@ ros-drcsim
 ===========
 
 Docker image to provide DRCSim environment.
+It can not be used on the nvidia driver.
 
 Quick start
 ------------
@@ -23,3 +24,7 @@ Run atlas.launch
 ```
 roslaunch drcsim_gazebo atlas.launch
 ```
+
+The following window will be launched.
+
+![drcsim_gz](drcsim_gz.png)
