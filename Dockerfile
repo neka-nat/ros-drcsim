@@ -1,5 +1,9 @@
 FROM ros:indigo
 
+LABEL com.nvidia.volumes.needed="nvidia_driver"
+ENV PATH /usr/local/nvidia/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+
 RUN apt-get update
 RUN apt-get install -y wget
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/drc/ubuntu trusty main" > /etc/apt/sources.list.d/drc-latest.list'
@@ -24,5 +28,6 @@ WORKDIR /home/developer
 RUN echo "export QT_X11_NO_MITSHM=1" >> ~/.bashrc
 RUN echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
 RUN echo "source /opt/ros/indigo/share/drcsim_model_resources/setup.sh" >> ~/.bashrc
-CMD ["roslaunch", "drcsim_gazebo", "atlas.launch"]
-# docker run -ti --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device=/dev/dri:/dev/dri ros_drcsim:1.0
+SHELL ["/bin/bash", "-c"]
+# CMD ["roslaunch", "drcsim_gazebo", "atlas.launch"]
+# nvidia-docker run -ti --privileged --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device=/dev/dri:/dev/dri ros_drcsim:1.0
